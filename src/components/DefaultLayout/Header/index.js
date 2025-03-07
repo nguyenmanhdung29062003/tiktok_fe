@@ -2,27 +2,56 @@ import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import images_logo from '../../../assets/images';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import {
+    faCircleXmark,
+    faEarthEurope,
+    faEllipsisVertical,
+    faKeyboard,
+    faQuestionCircle,
+} from '@fortawesome/free-solid-svg-icons';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import Tippy from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css';
 import { Wrapper as PopperWrapper } from '../../Popper';
 import AccountItem from '../../AccountItem';
+import Button from '../../Button';
+import Menu from '../../Menu';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
+
+const MENU_ITEMS = [
+    {
+        icon: <FontAwesomeIcon icon={faEarthEurope} />,
+        title: 'English',
+        to: '',
+        separate: true,
+    },
+    {
+        icon: <FontAwesomeIcon icon={faQuestionCircle} />,
+        title: 'Feedback and help',
+        to: '/',
+    },
+    {
+        icon: <FontAwesomeIcon icon={faKeyboard} />,
+        title: 'Keyboard shortcuts',
+        to: '/',
+    },
+];
 
 //để bind object styles vào và trả ra một method function cx
 //=> giúp viết className dưới dạng dấu -
 //vd .post-item{}
 function Header() {
     const [searching, setSearching] = useState('');
-    const [clearmount, setClearmount] = useState(false);
+    const [clearMount, setClearMount] = useState(false);
+    const [searchResultTab, setSearchResultTab] = useState(false);
 
     const handleMountCLear = (e) => {
         setSearching(e);
-        if (searching != null) setClearmount(true);
-        console.log('hahahah');
+        if (searching != null) setClearMount(true);
+        setSearchResultTab(true);
     };
 
     return (
@@ -65,11 +94,11 @@ function Header() {
                             />
                         </svg>
                     </svg> */}
-                    <img src={images_logo.logo} />
+                    <img src={images_logo.logo} alt="TikTok" />
                 </div>
 
                 <Tippy
-                    visible="true"
+                    visible={searchResultTab}
                     placement="bottom"
                     interactive={true}
                     render={(attrs) => (
@@ -91,12 +120,13 @@ function Header() {
                             value={searching}
                             onChange={(e) => handleMountCLear(e.target.value)}
                         />
-                        {clearmount && (
+                        {clearMount && (
                             <button
                                 className={cx('clear-btn')}
                                 onClick={() => {
                                     setSearching('');
-                                    setClearmount(false);
+                                    setClearMount(false);
+                                    setSearchResultTab(false);
                                 }}
                             >
                                 <FontAwesomeIcon icon={faCircleXmark} />
@@ -108,7 +138,26 @@ function Header() {
                     </div>
                 </Tippy>
 
-                <div className={cx('action')}></div>
+                <div className={cx('action')}>
+                    <Button
+                        outline={true}
+                        onClick={() => {
+                            alert('hello manh dung');
+                        }}
+                        // disable={true}
+                    >
+                        Log in
+                    </Button>
+                    <Button primary={true} rightIcon={<FontAwesomeIcon icon={faMagnifyingGlass} />}>
+                        Upload
+                    </Button>
+
+                    <Menu items={MENU_ITEMS}>
+                        <button className={cx('more-btn')}>
+                            <FontAwesomeIcon icon={faEllipsisVertical} />
+                        </button>
+                    </Menu>
+                </div>
             </div>
         </header>
     );

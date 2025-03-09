@@ -107,6 +107,31 @@
     color: #828282;
     font-size: 1.6rem;
 }
+
+.action {
+    display: flex;
+    align-items: center;
+}
+
+.action-btn {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 2.2rem;
+    cursor: pointer;
+    color: #161823;
+    padding: 4px 16px;
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-left: 12px;
+    cursor: pointer;
+}
+
 .more-btn {
     padding: 4px 8px;
     margin: 0px 8px;

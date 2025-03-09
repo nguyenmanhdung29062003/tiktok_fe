@@ -9,7 +9,7 @@
     --black: #0000;
     --text-color: #333;
     --white: #fff;
-    --text-color: #333;
+    --text-color2: #161823;
 }
 
 * {
@@ -25,9 +25,25 @@ body {
     font-size: 1.6rem;
     line-height: 1.5;
     text-rendering: optimizeSpeed;
+    color: var(--text-color);
 }
 
 a[href] {
     color: var(--text-color);
     text-decoration: none;
+}
+
+body {
+    .tippy-box {
+        background-color: rgba(84, 84, 84, 0.92);
+        font-size: 1.6rem;
+        border-radius: 8px;
+        line-height: 2.2rem;
+    }
+    .tippy-arrow {
+        color: rgba(84, 84, 84, 0.92);
+    }
+    .tippy-content {
+        padding: 8px 9px;
+    }
 }

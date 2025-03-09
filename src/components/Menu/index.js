@@ -9,7 +9,9 @@ import { useState } from 'react';
 
 const cx = classNames.bind(styles);
 
-function Menu({ children, items = [] }) {
+const defaultFn = () => {};
+
+function Menu({ children, items = [], onChange = defaultFn }) {
     const [history, setHistory] = useState([{ data: items }]);
 
     //lay ptu cuoi
@@ -27,6 +29,8 @@ function Menu({ children, items = [] }) {
                     onClick={() => {
                         if (isParent) {
                             setHistory((prev) => [...prev, item.children]);
+                        } else {
+                            onChange(item);
                         }
                     }}
                 />
@@ -36,7 +40,6 @@ function Menu({ children, items = [] }) {
 
     return (
         <Tippy
-            visible={true}
             interactive={true}
             delay={[0, 700]}
             placement="bottom-end"

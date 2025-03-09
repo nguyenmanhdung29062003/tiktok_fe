@@ -27,6 +27,13 @@ const MENU_ITEMS = [
         title: 'English',
         to: '',
         separate: true,
+        children: {
+            title: 'Language',
+            data: [
+                { code: 'en', title: 'English' },
+                { code: 'vi', title: 'Tiếng Việt' },
+            ],
+        },
     },
     {
         icon: <FontAwesomeIcon icon={faQuestionCircle} />,

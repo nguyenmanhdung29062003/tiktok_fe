@@ -4,13 +4,11 @@ import images_logo from '../../../assets/images';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faCircleXmark,
-    faCloudUpload,
     faCoins,
     faEarthEurope,
     faEllipsisVertical,
     faGear,
     faKeyboard,
-    faMessage,
     faQuestionCircle,
     faSignOut,
     faUser,
@@ -20,13 +18,13 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
-import { Wrapper as PopperWrapper } from '../../Popper';
-import AccountItem from '../../AccountItem';
+
 import Button from '../../Button';
 import Menu from '../../Menu';
-import { Link } from 'react-router-dom';
 
-import HeadlessTippy from '@tippyjs/react/headless';
+import { UploadIcon, MessageIcon } from '../../icons';
+import Image from '../../images';
+import Search from '../../Search';
 
 const cx = classNames.bind(styles);
 
@@ -34,7 +32,7 @@ const MENU_ITEMS = [
     {
         icon: <FontAwesomeIcon icon={faEarthEurope} />,
         title: 'English',
-        to: '',
+        to: '/',
         children: {
             title: 'Language',
             data: [
@@ -86,16 +84,6 @@ const USER_MENU = [
 function Header() {
     const currentUser = true;
 
-    const [searching, setSearching] = useState('');
-    const [clearMount, setClearMount] = useState(false);
-    const [searchResultTab, setSearchResultTab] = useState(false);
-
-    const handleMountCLear = (e) => {
-        setSearching(e);
-        if (searching != null) setClearMount(true);
-        setSearchResultTab(true);
-    };
-
     const handleMenuChange = (menuItem) => {
         console.log(menuItem);
     };
@@ -142,65 +130,24 @@ function Header() {
                     </svg> */}
                     <img src={images_logo.logo} alt="TikTok" />
                 </div>
-
-                <HeadlessTippy
-                    visible={searchResultTab}
-                    placement="bottom"
-                    interactive={true}
-                    render={(attrs) => (
-                        <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-                            <PopperWrapper>
-                                <h4 className={cx('search-title')}>Accounts</h4>
-                                <AccountItem />
-                                <AccountItem />
-                                <AccountItem />
-                                <AccountItem />
-                            </PopperWrapper>
-                        </div>
-                    )}
-                >
-                    <div className={cx('search')}>
-                        <input
-                            placeholder="Search accounts and videos"
-                            spellCheck="false"
-                            value={searching}
-                            onChange={(e) => handleMountCLear(e.target.value)}
-                        />
-                        {clearMount && (
-                            <button
-                                className={cx('clear-btn')}
-                                onClick={() => {
-                                    setSearching('');
-                                    setClearMount(false);
-                                    setSearchResultTab(false);
-                                }}
-                            >
-                                <FontAwesomeIcon icon={faCircleXmark} />
-                            </button>
-                        )}
-                        <button className={cx('search-btn')}>
-                            <FontAwesomeIcon icon={faMagnifyingGlass} />
-                        </button>
-                    </div>
-                </HeadlessTippy>
-
+                <Search />
                 {/* sau này vd chưa login thì render cái này, login rồi thì render cái kia*/}
                 <div className={cx('action')}>
                     {currentUser ? (
                         <>
                             <Tippy content="Upload video" placement="bottom" delay={[0, 50]}>
                                 <button className={cx('action-btn')}>
-                                    <FontAwesomeIcon icon={faCloudUpload} />
+                                    <UploadIcon />
                                 </button>
                             </Tippy>
                             <Tippy content="Message" placement="bottom" delay={[0, 50]}>
                                 <button className={cx('action-btn')}>
-                                    <FontAwesomeIcon icon={faMessage} />
+                                    <MessageIcon />
                                 </button>
                             </Tippy>
 
                             <Menu items={USER_MENU} onChange={handleMenuChange}>
-                                <img
+                                <Image
                                     src="https://scontent.fdad3-6.fna.fbcdn.net/v/t39.30808-6/480969488_560018257060883_4800137662314978523_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=c4aaNn43fAAQ7kNvgEl-WVK&_nc_oc=Adg1GRndhQnh8QDHYi1K-49RIpAN2Ouuwz9f68gJYYp0rKG7aTMt2Gj-q06aE8hM2bXuTtLQUfuJ7mjfidUXusSV&_nc_zt=23&_nc_ht=scontent.fdad3-6.fna&_nc_gid=ASOQZlI6rOr_0CowGY4YCUv&oh=00_AYGpXoqTQGS8ayPaWXJMA0Oo3RwE7WEATeVeVQkneZrgfQ&oe=67D31572"
                                     className={cx('user-avatar')}
                                     alt="manh dung"

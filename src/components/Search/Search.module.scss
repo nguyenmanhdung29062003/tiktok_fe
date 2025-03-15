@@ -39,7 +39,8 @@
     }
 }
 
-.clear-btn {
+.clear-btn,
+.loading {
     position: absolute;
     right: calc(var(--search-button-width) + 16px);
     top: 50%;
@@ -78,4 +79,17 @@
 
     color: #828282;
     font-size: 1.6rem;
+}
+
+.loading {
+    animation: spinner 0.8s linear infinite;
+}
+
+@keyframes spinner {
+    from {
+        transform: translateY(-50%) rotate(0);
+    }
+    to {
+        transform: translateY(-50%) rotate(360deg);
+    }
 }

@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faMagnifyingGlass, faSpider, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { useRef, useState, useEffect } from 'react';
 import { useDebounce } from '../../hooks';
-import axios from 'axios';
+import * as searchSrevice from '../../apiService/searchService';
 
 const cx = classNames.bind(styles);
 
@@ -32,15 +32,18 @@ function Search() {
 
         setLoading(true);
 
-        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debouncedValue)}&type=less`)
-            .then((res) => res.json())
-            .then((res) => {
-                setSearchResult(res.data);
+        const API = async () => {
+            try {
+                const res = await searchSrevice.search(debouncedValue);
+                setSearchResult(res);
+                console.log(res);
                 setLoading(false);
-            })
-            .catch(() => {
+            } catch (error) {
                 setLoading(false);
-            });
+            }
+        };
+
+        API();
     }, [debouncedValue]);
 
     const inputRef = useRef();
